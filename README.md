@@ -1,7 +1,7 @@
 # community
 
 #  常用Git command
-##Push(Local ->Remote) 
+## Push(Local ->Remote) 
 * git status (Red)
 * git add . 
 * Git status（Green）
