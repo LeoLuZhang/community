@@ -17,12 +17,9 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 
-
-
 </head>
 <body>
 <!--引入模板-->
-<!--<div th:insert="~{footer :: copy}"></div>-->
 <div th:insert="~{navigation :: nav}"></div>
 
 <div class="container-fluid main">
@@ -31,7 +28,7 @@
             <h2><span class="glyphicon  glyphicon-list" aria-hidden="true"></span>发现</h2>
             <!--展示问题详情列表-->
             <!--<div class="media" th:each="question : ${pagination.data}">-->
-            <div class="media" th:each="question : ${pagination.questions}">
+            <div class="media" th:each="question : ${pagination.data}">
                 <div class="media-left" >
                     <a href="#">
                         <img class="media-object img-rounded"
@@ -46,7 +43,7 @@
                         <span th:text="${question.viewCount}"></span> 次浏览 •
                         <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                     </span>
-                    <!--th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> </span>-->
+
                 </div>
             </div>
             <nav aria-label="Page navigation">
