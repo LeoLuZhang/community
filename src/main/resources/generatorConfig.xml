@@ -18,6 +18,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
+        <!--必须元素,生成对应的数据库对象和数据库查询对象-->
         <javaModelGenerator targetPackage="life.majiang.community.model" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
