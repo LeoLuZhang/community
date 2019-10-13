@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -63,7 +64,6 @@ public class AuthorizeController {
              user.setGmtCreate(System.currentTimeMillis());
              user.setGmtModified(user.getGmtCreate());
              user.setAvatarUrl(githubUser.getAvatarUrl());
-//             userMapper.insert(user);
             userService.createOrUpdate(user);
              response.addCookie(new Cookie("token",token));
             //登录成功，写Cookie和session
@@ -74,5 +74,16 @@ public class AuthorizeController {
             return "redirect:/";
         }
 
+    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response){
+        //删除seeion，相当于银行卡
+        request.getSession().removeAttribute("user");
+        //删除cookie,相当于银行账户
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
