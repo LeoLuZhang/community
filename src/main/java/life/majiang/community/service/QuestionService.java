@@ -142,4 +142,13 @@ public class QuestionService {
     }
 
 
+    public QuestionDTO getById(Long id) {
+       Question question= questionMapper.getById(id);
+       QuestionDTO questionDTO = new QuestionDTO();
+       BeanUtils.copyProperties(question,questionDTO);
+//       获取User对象
+        User user = userMapper.findByID(question.getCreator());
+        questionDTO.setUser(user);
+       return questionDTO;
+    }
 }
