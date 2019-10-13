@@ -118,7 +118,6 @@ public class QuestionService {
             if (dbQuestion == null){
                 //Throw error
                 System.out.println("question  could not be found");
-
             }
             if(dbQuestion.getCreator().longValue()!=question.getCreator().longValue()){
                 //throw error
