@@ -136,17 +136,17 @@ public interface QuestionMapper {
      */
     int updateByPrimaryKey(Question record);
 
-    @Select("select * from question limit #{offset},#{size}")
-    List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
-
-    @Select("select count(*) from question;")
-    Integer count();
-    @Select("select count(*) from question where creator=#{userId};")
-    Integer countByUserID(@Param("userId") Long userId);
-
-    @Select("select * from question where creator =#{userId} limit #{offset},#{size}")
-    List<Question> listByUserId(@Param("userId") Long userId, @Param(value = "offset") Integer offset,@Param(value = "size") Integer size);
-
-    @Select("select * from question where id = #{id};")
-    Question getById(@Param("id") Long id);
+//    @Select("select * from question limit #{offset},#{size}")
+//    List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+//
+//    @Select("select count(*) from question;")
+//    Integer count();
+//    @Select("select count(*) from question where creator=#{userId};")
+//    Integer countByUserID(@Param("userId") Long userId);
+//
+//    @Select("select * from question where creator =#{userId} limit #{offset},#{size}")
+//    List<Question> listByUserId(@Param("userId") Long userId, @Param(value = "offset") Integer offset,@Param(value = "size") Integer size);
+//
+//    @Select("select * from question where id = #{id};")
+//    Question getById(@Param("id") Long id);
 }

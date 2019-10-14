@@ -104,10 +104,4 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
 
-    @Select("select * from user where  id =#{offset}")
-    User findByID(Long creator);
-
-
-    @Select("select * from user where  token =#{token}")
-    User findByToken(String token);
 }

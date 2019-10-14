@@ -17,3 +17,7 @@
 *  (设置aliases package)mybatis.type-aliases-package=life.majiang.community.mapper
 *  (设置classpath的配置文件)mybatis.mapper-locations=classpath:mapper/*.xml
 3. generatorConfig.xml 配置
+
+### 异常处理
+1. BasicErrorController 是默认的实现方式，可以通过实现ErrorController接口，重新自己去定义我们自己的异常页面。 
+2. 同时也以通过@ControllerAdvice配合ExceptionHandler去处理所以上下文中业务异常。
