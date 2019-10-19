@@ -21,3 +21,7 @@
 ### 异常处理
 1. BasicErrorController 是默认的实现方式，可以通过实现ErrorController接口，重新自己去定义我们自己的异常页面。 
 2. 同时也以通过@ControllerAdvice配合ExceptionHandler去处理所以上下文中业务异常。
+
+### flyway
+* mvn flyway:migrade ：数据库版本管理，执行sql脚本；
+* mvn -Dmybatis.generator.overwrite=true mybatis-generator:generategir s
