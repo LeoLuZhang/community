@@ -24,4 +24,7 @@
 
 ### flyway
 * mvn flyway:migrade ：数据库版本管理，执行sql脚本；
-* mvn -Dmybatis.generator.overwrite=true mybatis-generator:generategir s
+* mvn -Dmybatis.generator.overwrite=true mybatis-generator:generategir 
+
+***
+* sample community: https://github.com/PuZhiweizuishuai/community

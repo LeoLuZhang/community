@@ -16,8 +16,16 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
-
 </head>
+<script type="application/javascript">
+    window.onload = function () {
+        var closable = window.localStorage.getItem("closable");
+        if (closable == "true") {
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
 <body>
 <!--引入模板-->
 <div th:insert="~{navigation :: nav}"></div>
@@ -29,20 +37,16 @@
             <!--展示问题详情列表-->
             <div class="media" th:each="question : ${pagination.data}">
                 <div class="media-left" >
-                    <!--<a href="#">-->
-                        <!--<img class="media-object img-rounded"-->
-                             <!--th:src="${question.user.avatarUr}">-->
-                    <!--</a>-->
                     <a href="#">
-                        <img class="media-object img-rounded"
-                             th:src="${question.user.avatarUrl}">
+                        <img  class="media-object img-rounded"
+                                th:src="${question.user.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading" >
                         <a th:href="@{'/question/'+ ${question.id}}" th:text="${question.title}"></a>
                     </h4>
-                    <span th:text="${question.description}"></span> <br>
+                    <!--<span th:text="${question.description}"></span> <br>-->
                     <span class="text-desc">
                         <span th:text="${question.commentCount}"></span>个回复  •
                         <span th:text="${question.viewCount}"></span> 次浏览 •
