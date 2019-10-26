@@ -6,6 +6,7 @@ import life.majiang.community.exception.CustomizeErrorCode;
 import life.majiang.community.model.Comment;
 import life.majiang.community.model.User;
 import life.majiang.community.service.CommentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +36,16 @@ public class CommentController {
                        HttpServletRequest request){
         //@RequestBody接收Jason格式的数据，变成对象。
         User user = (User)request.getSession().getAttribute("user");
+        //如果user为空，抛出未登录的异常
         if (user == null){
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
+
+        //如果评论内容为空，抛出异常
+        if (commentDTO==null|| StringUtils.isBlank(commentDTO.getContent())){
+            return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
+        }
+
         Comment comment = new Comment();
         comment.setParentId(commentDTO.getParentId());
         comment.setContent(commentDTO.getContent());
