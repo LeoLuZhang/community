@@ -4,14 +4,15 @@ import life.majiang.community.model.User;
 import lombok.Data;
 
 /**
- * @Title: CommentDTO
+ * @Title: CommentCreateDTO
  * @Description:
  * @Auther:Leo L Zhang
  * @Version: 1.0
- * @create 2019/10/16 21:33
+ * @create 2019/10/26 14:30
  */
 @Data
 public class CommentDTO {
+
     private Long  id;
     private Long parentId;
     private Integer type;
