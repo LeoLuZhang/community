@@ -74,49 +74,28 @@ public class CommentService {
         }
     }
 
-//    public List<CommentCreateDTO> listByTargetId(Long id, CommentTypeEnum type) {
-//        CommentExample commentExample = new CommentExample();
-//        commentExample.createCriteria()
-//                .andParentIdEqualTo(id)
-//                .andTypeEqualTo(type.getType());
-//        //按创建时间逆序排列
-//        commentExample.setOrderByClause("gmt_create desc");
-//        List<Comment> comments = commentMapper.selectByExample(commentExample);
-//
-//        //如果评论为空，则创建新的数组
-//        if (comments.size()==0){
-//            return new ArrayList<>();
-//        }
-//
-//
-//        return null;
-//    }
-
-    public List<CommentDTO> listByQuestionId(Long id) {
+    public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {
 
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
-                .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+                .andTypeEqualTo(type.getType());
+        commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
-
+        //如果评论为空，则创建新的数组
         if(comments.size()==0){
             return new ArrayList<>();
         }
-
         //获取去重的评论人
         Set<Long> commentators = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
         List<Long> userIds = new ArrayList<>();
         userIds.addAll(commentators);
-
         //获取评论人并转换为Map
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andIdIn(userIds);
         List<User> users = userMapper.selectByExample(userExample);
         Map<Long,User> userMap = users.stream().collect(Collectors.toMap(user->user.getId(),user->user));
-
-
         //转换comment为commentDTO
         List<CommentDTO> commentDTOS = comments.stream().map(comment -> {
             CommentDTO commentDTO = new CommentDTO();
@@ -126,4 +105,5 @@ public class CommentService {
         }).collect(Collectors.toList());
         return commentDTOS;
     }
+
 }

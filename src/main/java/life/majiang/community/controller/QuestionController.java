@@ -4,6 +4,8 @@ import life.majiang.community.dto.CommentCreateDTO;
 import life.majiang.community.dto.CommentDTO;
 import life.majiang.community.dto.QuestionDTO;
 import life.majiang.community.emums.CommentTypeEnum;
+import life.majiang.community.exception.CustomizeErrorCode;
+import life.majiang.community.exception.CustomizeException;
 import life.majiang.community.service.CommentService;
 import life.majiang.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +33,20 @@ public class QuestionController {
     private CommentService commentService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name = "id") Long id,
+    public String question(@PathVariable(name = "id") String id,
                            Model model){
-        //捕获非法输入异常
+        Long questionIO = null;
+        try{
+            questionIO = Long.parseLong(id);
+        }catch (NumberFormatException e){
+            //捕获非法输入异常
+            throw new CustomizeException(CustomizeErrorCode.INVALID_INPUT);
+        }
+        QuestionDTO questionDTO = questionService.getById(questionIO);
+        List<CommentDTO> comments = commentService.listByTargetId(questionIO, CommentTypeEnum.QUESTION);
 
-
-        QuestionDTO questionDTO = questionService.getById(id);
-//        List<CommentCreateDTO> comments = commentService.listByTargetId(questionDTO, CommentTypeEnum.QUESTION);
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
         //累加阅读数
-        questionService.incView(id);
+        questionService.incView(questionIO);
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",comments);
         return "question";

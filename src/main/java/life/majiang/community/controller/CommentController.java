@@ -1,7 +1,9 @@
 package life.majiang.community.controller;
 
 import life.majiang.community.dto.CommentCreateDTO;
+import life.majiang.community.dto.CommentDTO;
 import life.majiang.community.dto.ResultDTO;
+import life.majiang.community.emums.CommentTypeEnum;
 import life.majiang.community.exception.CustomizeErrorCode;
 import life.majiang.community.model.Comment;
 import life.majiang.community.model.User;
@@ -9,12 +11,10 @@ import life.majiang.community.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Title: CommentController
@@ -40,12 +40,10 @@ public class CommentController {
         if (user == null){
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
-
         //如果评论内容为空，抛出异常
         if (commentDTO==null|| StringUtils.isBlank(commentDTO.getContent())){
             return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
-
         Comment comment = new Comment();
         comment.setParentId(commentDTO.getParentId());
         comment.setContent(commentDTO.getContent());
@@ -56,6 +54,14 @@ public class CommentController {
         comment.setLikeCount(0L);
         commentService.insert(comment);
         return ResultDTO.okOf();
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id")Long id){
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return  ResultDTO.okof(commentDTOS);
     }
 
 }
